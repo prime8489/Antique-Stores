@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Products | Antique Handicraft</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <h2>Admin Panel</h2>
+      <nav>
+        <a href="/views/admin/dashboard.html">Dashboard</a>
+        <a href="/views/admin/products.html" class="active">Products</a>
+        <button onclick="logout()" class="btn">Logout</button>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-content">
+      <h1>Manage Products</h1>
+      
+      <!-- Add Product Form -->
+      <form id="add-product-form" class="card">
+        <h2>Add New Product</h2>
+        <input type="text" id="product-name" placeholder="Product Name" required class="input">
+        <input type="number" id="product-price" placeholder="Price" required class="input">
+        <input type="url" id="product-image" placeholder="Image URL" class="input">
+        <button type="button" onclick="addProduct()" class="btn">Add Product</button>
+      </form>
+
+      <!-- Products Table -->
+      <table id="products-table" class="admin-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Products load here via admin.js -->
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+  <script src="/js/firebase-config.js" type="module"></script>
+  <script src="/js/auth.js" type="module"></script>
+  <script src="/js/admin.js" type="module"></script>
+</body>
+</html>
