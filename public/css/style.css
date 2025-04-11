@@ -6,6 +6,7 @@
   --ios-light-gray: #E5E5EA;
   --ios-green: #34C759;
   --ios-red: #FF3B30;
+  --ios-yellow: #FFCC00; /* NEW */
 }
 
 /* Base Styles */
@@ -16,9 +17,39 @@ body {
   background-color: var(--ios-gray);
   color: var(--ios-dark-gray);
   line-height: 1.6;
+  min-height: 100vh; /* NEW */
 }
 
-/* Navigation Bar (iOS-style) */
+/* NEW: Loading Spinner */
+.loading-spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(0,0,0,0.1);
+  border-radius: 50%;
+  border-top-color: var(--ios-blue);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* NEW: Empty State */
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: var(--ios-dark-gray);
+  opacity: 0.7;
+}
+
+.empty-state img {
+  width: 80px;
+  opacity: 0.5;
+  margin-bottom: 16px;
+}
+
+/* Navigation Bar (iOS-style) - UPDATED */
 .navbar {
   background: white;
   padding: 12px 16px;
@@ -29,65 +60,38 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
+  gap: 15px; /* NEW */
 }
 
 .nav-brand {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0; /* NEW */
 }
 
-.nav-brand img {
-  height: 32px;
-  border-radius: 4px;
-}
-
-.nav-title {
-  font-size: 1.2em;
-  font-weight: 600;
-}
-
-/* Buttons (iOS-style) */
-.btn {
-  display: inline-block;
-  padding: 10px 16px;
-  background: var(--ios-blue);
-  color: white;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 500;
+/* NEW: Mobile Menu Toggle */
+.menu-toggle {
+  display: none;
+  background: none;
   border: none;
-  font-size: 1em;
-  cursor: pointer;
-  transition: opacity 0.2s;
+  font-size: 1.5em;
 }
 
-.btn:hover {
-  opacity: 0.9;
-}
-
-.btn-outline {
-  background: transparent;
-  border: 1px solid var(--ios-blue);
-  color: var(--ios-blue);
-}
-
-.btn-danger {
-  background: var(--ios-red);
-}
-
-/* Cards (Product Items) */
+/* Cards - UPDATED */
 .card {
   background: white;
   border-radius: 12px;
   padding: 16px;
   margin-bottom: 16px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
+  transition: all 0.3s ease; /* NEW */
+  overflow: hidden; /* NEW */
 }
 
 .card:hover {
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* NEW */
 }
 
 .card img {
@@ -95,59 +99,71 @@ body {
   border-radius: 8px;
   aspect-ratio: 1/1;
   object-fit: cover;
+  transition: transform 0.3s; /* NEW */
 }
 
-/* Forms (iOS-style) */
-.input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid var(--ios-light-gray);
-  border-radius: 8px;
-  font-size: 1em;
-  margin: 8px 0;
+.card:hover img {
+  transform: scale(1.02); /* NEW */
 }
 
-.input:focus {
-  outline: none;
-  border-color: var(--ios-blue);
+/* NEW: Price Tag */
+.price-tag {
+  background: var(--ios-green);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.9em;
+  display: inline-block;
 }
 
-/* Product Grid */
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-  padding: 16px;
-}
-
-/* Responsive Design */
+/* Responsive Design - UPDATED */
 @media (max-width: 768px) {
   .products-grid {
     grid-template-columns: 1fr;
+    gap: 12px; /* NEW */
   }
   
   .navbar {
     padding: 10px 12px;
+    flex-wrap: wrap; /* NEW */
+  }
+  
+  /* NEW: Mobile Menu */
+  .menu-toggle {
+    display: block;
+  }
+  
+  .admin-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  
+  .admin-content {
+    margin-left: 0;
   }
 }
 
-/* Admin Panel Specific */
-.admin-sidebar {
-  background: var(--ios-dark-gray);
+/* NEW: Status Badges */
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+
+.status-available {
+  background: var(--ios-green);
   color: white;
-  width: 220px;
-  height: 100vh;
-  position: fixed;
-  padding: 20px 0;
 }
 
-.admin-content {
-  margin-left: 220px;
-  padding: 20px;
+.status-sold {
+  background: var(--ios-light-gray);
+  color: var(--ios-dark-gray);
 }
 
-/* Utility Classes */
-.text-center { text-align: center; }
-.mt-1 { margin-top: 8px; }
-.mt-2 { margin-top: 16px; }
-.mb-1 { margin-bottom: 8px; }
+/* NEW: Smooth transitions */
+a, button {
+  transition: all 0.2s ease;
+}
