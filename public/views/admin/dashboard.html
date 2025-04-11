@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard | Antique Handicraft</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <h2>Admin Panel</h2>
+      <nav>
+        <a href="/views/admin/dashboard.html" class="active">Dashboard</a>
+        <a href="/views/admin/products.html">Products</a>
+        <button onclick="logout()" class="btn">Logout</button>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-content">
+      <h1>Dashboard Overview</h1>
+      
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Total Products</h3>
+          <p id="total-products">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>Total Orders</h3>
+          <p id="total-orders">0</p>
+        </div>
+      </div>
+
+      <h2>Recent Orders</h2>
+      <table id="recent-orders">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Orders load here via JS -->
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+  <script src="/js/firebase-config.js" type="module"></script>
+  <script src="/js/auth.js" type="module"></script>
+  <script>
+    // Load dashboard stats
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Implement Firestore queries for:
+      // 1. Total products count
+      // 2. Total orders count
+      // 3. Recent orders list
+    });
+  </script>
+</body>
+</html>
