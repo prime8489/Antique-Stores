@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="admin-sidebar">
+    <h2>Admin</h2>
+    <nav>
+      <a href="/admin/dashboard.html">Dashboard</a>
+      <a href="/admin/products.html" class="active">Products</a>
+    </nav>
+  </div>
+
+  <div class="admin-content">
+    <h1>Manage Products</h1>
+    <form id="product-form">
+      <input type="text" id="product-name" placeholder="Product Name" required class="input">
+      <input type="number" id="product-price" placeholder="Price" required class="input">
+      <button type="button" onclick="addProduct()" class="btn">Add Product</button>
+    </form>
+
+    <table id="products-table">
+      <!-- Products load here via admin.js -->
+    </table>
+  </div>
+
+  <script src="/js/firebase-config.js" type="module"></script>
+  <script src="/js/admin.js" type="module"></script>
+</body>
+</html>
