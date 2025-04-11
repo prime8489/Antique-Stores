@@ -2,32 +2,49 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details | Antique Handicraft</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <div class="admin-sidebar">
-    <h2>Admin</h2>
-    <nav>
-      <a href="/admin/dashboard.html">Dashboard</a>
-      <a href="/admin/products.html" class="active">Products</a>
-    </nav>
-  </div>
+  <nav class="navbar">
+    <a href="/" class="nav-brand">
+      <img src="/images/logo/file-745.jpg" alt="Logo" class="logo">
+      <span class="nav-title">Antique Handicraft</span>
+    </a>
+  </nav>
 
-  <div class="admin-content">
-    <h1>Manage Products</h1>
-    <form id="product-form">
-      <input type="text" id="product-name" placeholder="Product Name" required class="input">
-      <input type="number" id="product-price" placeholder="Price" required class="input">
-      <button type="button" onclick="addProduct()" class="btn">Add Product</button>
-    </form>
+  <main class="product-page">
+    <section class="product-images">
+      <img id="main-image" src="" alt="Main Product Image">
+    </section>
 
-    <table id="products-table">
-      <!-- Products load here via admin.js -->
-    </table>
-  </div>
+    <section class="product-info">
+      <h1 id="product-name">Loading...</h1>
+      <div class="price" id="product-price">₹0</div>
+      <p id="product-description"></p>
+      <button id="buy-now" class="btn">Buy Now</button>
+    </section>
+  </main>
 
-  <script src="/js/firebase-config.js" type="module"></script>
-  <script src="/js/admin.js" type="module"></script>
+  <script>
+    // Get product ID from URL
+    const productId = new URLSearchParams(window.location.search).get('id');
+    
+    // Load product data
+    document.addEventListener('DOMContentLoaded', async () => {
+      const product = await getProduct(productId);
+      if (product) {
+        document.getElementById('product-name').textContent = product.name;
+        document.getElementById('product-price').textContent = `₹${product.price}`;
+        document.getElementById('product-description').textContent = product.description || "No description available";
+        document.getElementById('main-image').src = product.imageUrl || '/images/default-product.jpg';
+      }
+    });
+
+    async function getProduct(id) {
+      // Implement Firestore fetch
+    }
+  </script>
 </body>
 </html>
