@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Orders | Antique Handicraft</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="nav-brand">
+      <img src="/images/logo/file-745.jpg" alt="Logo" class="logo">
+      <span class="nav-title">Antique Handicraft</span>
+    </a>
+    <a href="/" class="btn">Back to Shop</a>
+  </nav>
+
+  <main>
+    <h1>My Orders</h1>
+    <div class="orders-list" id="orders-container">
+      <!-- Orders load here via JS -->
+      <div class="empty-state">
+        <img src="/images/ui/empty-orders.svg" alt="No orders">
+        <p>You haven't placed any orders yet</p>
+        <a href="/" class="btn">Browse Products</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const orders = await fetchOrders();
+      if (orders.length > 0) {
+        document.querySelector('.empty-state').style.display = 'none';
+        // Render orders
+      }
+    });
+
+    async function fetchOrders() {
+      // Implement Firestore fetch
+      return []; // Temporary
+    }
+  </script>
+</body>
+</html>
