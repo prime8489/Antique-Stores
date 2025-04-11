@@ -12,13 +12,24 @@
       <img src="/images/logo/file-745.jpg" alt="Logo" class="logo">
       <span class="nav-title">Antique Handicraft</span>
     </div>
-    <div id="auth-buttons">
+    <div id="auth-section">
       <button onclick="googleLogin()" class="btn">Login with Google</button>
+    </div>
+    <div id="user-section" style="display:none">
+      <span id="user-name"></span>
+      <a href="/views/user/orders.html" class="btn">My Orders</a>
+      <button onclick="logout()" class="btn">Logout</button>
     </div>
   </nav>
 
-  <main class="products-grid" id="products-container">
-    <!-- Products load here via JavaScript -->
+  <main>
+    <div class="search-container">
+      <input type="text" id="search-bar" placeholder="Search antiques..." class="input">
+    </div>
+
+    <div class="products-grid" id="products-container">
+      <!-- Products load here via main.js -->
+    </div>
   </main>
 
   <script src="/js/firebase-config.js" type="module"></script>
