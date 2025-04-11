@@ -1,75 +1,50 @@
-import { getFirestore, collection, addDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { app } from './auth.js';
-
-const db = getFirestore(app);
-
 // Add Product
-window.addProduct = async () => {
-  const name = document.getElementById('product-name').value;
-  const price = parseFloat(document.getElementById('product-price').value);
-  const imageUrl = document.getElementById('product-image').value;
+function addProduct() {
+  const productData = {
+    name: document.getElementById('product-name').value,
+    price: Number(document.getElementById('product-price').value),
+    image: document.getElementById('product-image').value,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  };
 
-  try {
-    await addDoc(collection(db, "products"), {
-      name,
-      price,
-      imageUrl,
-      createdAt: new Date()
+  firebase.firestore().collection("products").add(productData)
+    .then(() => {
+      alert('Product added!');
+      loadProducts();
     });
-    alert('Product added successfully!');
-    loadAdminProducts();
-  } catch (error) {
-    console.error("Error adding product:", error);
-    alert('Failed to add product');
-  }
-};
+}
 
 // Delete Product
-window.deleteProduct = async (id) => {
-  if (confirm('Are you sure you want to delete this product?')) {
-    try {
-      await deleteDoc(doc(db, "products", id));
-      loadAdminProducts();
-    } catch (error) {
-      console.error("Error deleting product:", error);
-    }
+function deleteProduct(id) {
+  if (confirm('Delete this item?')) {
+    firebase.firestore().collection("products").doc(id).delete()
+      .then(() => loadProducts());
   }
-};
+}
 
 // Load Products for Admin
-window.loadAdminProducts = async () => {
-  const table = document.getElementById('admin-products-table');
-  table.innerHTML = '<tr><td colspan="4">Loading...</td></tr>';
-
-  try {
-    const querySnapshot = await getDocs(collection(db, "products"));
-    table.innerHTML = `
-      <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Image</th>
-        <th>Action</th>
-      </tr>
-    `;
-
-    querySnapshot.forEach((doc) => {
-      const product = doc.data();
-      table.innerHTML += `
-        <tr>
-          <td>${product.name}</td>
-          <td>₹${product.price}</td>
-          <td><img src="${product.imageUrl || ''}" style="height:50px" onerror="this.style.display='none'"></td>
-          <td>
-            <button onclick="deleteProduct('${doc.id}')" class="btn btn-danger">Delete</button>
-          </td>
-        </tr>
-      `;
+function loadProducts() {
+  firebase.firestore().collection("products")
+    .orderBy('timestamp', 'desc')
+    .get()
+    .then(querySnapshot => {
+      const table = document.getElementById('admin-table');
+      table.innerHTML = '<tr><th>Name</th><th>Price</th><th>Action</th></tr>';
+      
+      querySnapshot.forEach(doc => {
+        const data = doc.data();
+        table.innerHTML += `
+          <tr>
+            <td>${data.name}</td>
+            <td>₹${data.price}</td>
+            <td>
+              <button onclick="deleteProduct('${doc.id}')">Delete</button>
+            </td>
+          </tr>
+        `;
+      });
     });
-  } catch (error) {
-    console.error("Error loading products:", error);
-    table.innerHTML = '<tr><td colspan="4">Error loading products</td></tr>';
-  }
-};
+}
 
-// Initialize Admin Dashboard
-window.onload = loadAdminProducts;
+// Initialize Admin
+document.addEventListener('DOMContentLoaded', loadProducts);
